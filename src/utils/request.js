@@ -32,17 +32,12 @@ service.interceptors.request.use(
 service.interceptors.response.use(
   response => {
     const res = response.data
-    // if the custom code is not 20000, it is judged as an error.
+    // 如果状态码返回的不是0
     if (res.code !== 0) {
-      Message({
-        message: res.msg || '访问错误',
-        type: 'error',
-        duration: 5 * 1000
-      })
       if (res.code === 4010001) {
         // to re-login
         MessageBox.confirm(
-          '状态失效，请重新登录',
+          `${res.msg}`,
           '温馨提示',
           {
             confirmButtonText: '重新登录',
@@ -58,6 +53,8 @@ service.interceptors.response.use(
               location.reload()
             })
         })
+      } else {
+        Message.error(res.msg, 3000)
       }
       return Promise.reject(new Error(res.msg || '访问错误'))
     } else {
@@ -65,12 +62,7 @@ service.interceptors.response.use(
     }
   },
   error => {
-    console.log('err' + error) // for debug
-    Message({
-      message: error.msg,
-      type: 'error',
-      duration: 5 * 1000
-    })
+    Message.error(error.msg, 3000)
     return Promise.reject(error)
   }
 )

@@ -1,13 +1,12 @@
 import { login, logout, getAdminInfo } from '@/api/user'
-import { getAccessToken, getRefreshToken } from '@/utils/auth'
 import { resetRouter } from '@/router'
 import { Message } from 'element-ui'
 import Cookies from 'js-cookie'
 
 const getDefaultState = () => {
   return {
-    accessToken: getAccessToken(),
-    refreshToken: getRefreshToken(),
+    accessToken: '',
+    refreshToken: '',
     adminInfo: {}// 管理员信息
   }
 }
@@ -63,6 +62,7 @@ const actions = {
     return new Promise((resolve, reject) => {
       login({ username: username.trim(), password: password }).then(res => {
         const { accessToken, refreshToken, isAdmin } = res.data
+        // 判断是否是管理员
         if (isAdmin === 1) {
           // 存入访问token 刷新token 用户部分信息
           commit('SET_ACCESS_TOKEN', accessToken)

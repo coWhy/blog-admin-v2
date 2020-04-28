@@ -1,7 +1,7 @@
 import router from './router'
 import NProgress from 'nprogress' // progress bar
 import 'nprogress/nprogress.css' // progress bar style
-import { getAccessToken } from '@/utils/auth' // get token from cookie
+import { getAccessToken, getRefreshToken } from '@/utils/auth' // get token from cookie
 import getPageTitle from '@/utils/get-page-title'
 
 NProgress.configure({ showSpinner: false }) // NProgress Configuration
@@ -16,18 +16,17 @@ router.beforeEach(async(to, from, next) => {
 
   // 确定用户是否已登录
   const hasAccessToken = getAccessToken()
-
-  if (hasAccessToken) {
+  const hasRefreshToken = getRefreshToken()
+  if (hasAccessToken && hasRefreshToken) {
     if (to.path === '/login') {
-      // if is logged in, redirect to the home page
+      // 如果已登录，则重定向到主页
       next({ path: '/' })
       NProgress.done()
     } else {
       next()
     }
   } else {
-    /* has no token*/
-
+    // 没有token
     if (whiteList.indexOf(to.path) !== -1) {
       // 在免费登录白名单，直接去
       next()

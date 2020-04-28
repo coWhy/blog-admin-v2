@@ -100,6 +100,7 @@ export default {
           .dispatch('user/login', this.loginForm)
           .then(() => {
             this.$router.push({ path: this.redirect || '/' })
+            this.$message.success('登录成功')
             this.$store.dispatch('user/getAdminInfo')
             this.loading = false
           })
