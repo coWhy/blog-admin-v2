@@ -15,6 +15,7 @@ const store = new Vuex.Store({
     user
   },
   getters,
+  // vuex持久化 插件
   plugins: [
     persistedState({
       storage: {

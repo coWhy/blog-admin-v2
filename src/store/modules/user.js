@@ -1,20 +1,19 @@
 import { login, logout, getAdminInfo } from '@/api/user'
-import { getAccessToken, getRefreshToken, getIsAdmin } from '@/utils/auth'
+import { getAccessToken, getRefreshToken } from '@/utils/auth'
 import { resetRouter } from '@/router'
+import { Message } from 'element-ui'
 import Cookies from 'js-cookie'
 
 const getDefaultState = () => {
   return {
     accessToken: getAccessToken(),
     refreshToken: getRefreshToken(),
-    isAdmin: getIsAdmin(), // 是否是管理员
     adminInfo: {}// 管理员信息
   }
 }
 
 const AccessTokenKey = 'accessToken'
 const RefreshTokenKey = 'refreshToken'
-const IsAdminKey = 'isAdmin'
 const state = getDefaultState()
 
 const mutations = {
@@ -39,14 +38,8 @@ const mutations = {
     Cookies.set(RefreshTokenKey, refreshToken)
   },
   /**
-   * 存入管理员标识
-   * @param {*} state
-   * @param {*} isAdmin 是否是管理员
+   * 存入管理员信息 利用Vuex持久化插件
    */
-  SET_IS_ADMIN(state, isAdmin) {
-    state.isAdmin = isAdmin
-    Cookies.set(IsAdminKey, isAdmin)
-  },
   SET_ADMIN_INFO(state, adminInfo) {
     state.adminInfo = adminInfo
   },
@@ -54,12 +47,8 @@ const mutations = {
    * 清除所有本地cookie
    */
   REMOVE_COKKIES(state) {
-    // state.accessToken = ''
-    // state.refreshToken = ''
-    // state.IsAdminKey = -1
     Cookies.remove(AccessTokenKey)
     Cookies.remove(RefreshTokenKey)
-    Cookies.remove(IsAdminKey)
   }
 }
 
@@ -73,12 +62,16 @@ const actions = {
     const { username, password } = loginForm
     return new Promise((resolve, reject) => {
       login({ username: username.trim(), password: password }).then(res => {
-        const result = res.data
-        // 存入访问token 刷新token 用户部分信息
-        commit('SET_ACCESS_TOKEN', result.accessToken)
-        commit('SET_REFRESH_TOKEN', result.refreshToken)
-        commit('SET_IS_ADMIN', result.isAdmin)
-        resolve()
+        const { accessToken, refreshToken, isAdmin } = res.data
+        if (isAdmin === 1) {
+          // 存入访问token 刷新token 用户部分信息
+          commit('SET_ACCESS_TOKEN', accessToken)
+          commit('SET_REFRESH_TOKEN', refreshToken)
+          resolve()
+        } else {
+          Message.warning('您不是管理员,不能访问该资源', 2000)
+          reject(res.data)
+        }
       }).catch(error => {
         reject(error)
       })
@@ -89,7 +82,7 @@ const actions = {
     return new Promise((resolve, reject) => {
       getAdminInfo().then(res => {
         commit('SET_ADMIN_INFO', res.data)
-        console.log(JSON.stringify(res.data))
+        // console.log(JSON.stringify(res.data))
         resolve()
       }).catch(error => {
         reject(error)
@@ -111,9 +104,9 @@ const actions = {
       })
     })
   },
+  // 清除所有cookie 重置 状态
   resetCookies({ commit }) {
     return new Promise(resolve => {
-      // 清除所有cookie 重置 状态
       commit('REMOVE_COKKIES')
       commit('RESET_STATE')
       resolve()

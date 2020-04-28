@@ -15,36 +15,8 @@
       </div>
       <div class="progress-item">
         <div class="info_item">
-          <span>真实姓名</span>
-          <span>{{ adminInfo.realName }}</span>
-        </div>
-        <el-progress :percentage="100" status="success" />
-      </div>
-      <div class="progress-item">
-        <div class="info_item">
-          <span>自我介绍</span>
-          <span>{{ adminInfo.introduction }}</span>
-        </div>
-        <el-progress :percentage="100" status="success" />
-      </div>
-      <div class="progress-item">
-        <div class="info_item">
           <span>个性签名</span>
           <span>{{ adminInfo.signature }}</span>
-        </div>
-        <el-progress :percentage="100" status="success" />
-      </div>
-      <div class="progress-item">
-        <div class="info_item">
-          <span>性别</span>
-          <span>{{ adminInfo.sex === 1 ?'男':'女' }}</span>
-        </div>
-        <el-progress :percentage="100" status="success" />
-      </div>
-      <div class="progress-item">
-        <div class="info_item">
-          <span>邮箱</span>
-          <span>{{ adminInfo.email }}</span>
         </div>
         <el-progress :percentage="100" status="success" />
       </div>
@@ -55,13 +27,16 @@
         </div>
         <el-progress :percentage="100" status="success" />
       </div>
-      <div class="progress-item">
+      <div
+        class="
+          progress-item"
+      >
         <div class="info_item">
           <span>最近登录时间</span>
           <span>{{ adminInfo.lastLoginAt }}</span>
         </div>
-        <el-progress :percentage="100" status="success" />
-      </div>
+        <el-progress :percentage="100" status="warning" />
+        </el-progress></div>
     </div>
   </el-card>
 </template>

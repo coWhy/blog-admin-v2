@@ -42,8 +42,8 @@ service.interceptors.response.use(
       if (res.code === 4010001) {
         // to re-login
         MessageBox.confirm(
-          '您已经登出，您可以取消以停留在此页面，或再次登录',
-          '确认注销',
+          '状态失效，请重新登录',
+          '温馨提示',
           {
             confirmButtonText: '重新登录',
             cancelButtonText: '取消',
@@ -61,22 +61,6 @@ service.interceptors.response.use(
       }
       return Promise.reject(new Error(res.msg || '访问错误'))
     } else {
-      // 如果不是管理员 直接不让登陆
-      // if ((JSON.stringify(res.isAdmin)) !== 1) {
-      //   Message({
-      //     message: '您不是管理员,不能访问该资源',
-      //     type: 'error',
-      //     duration: 5 * 1000
-      //   })
-      //   /**
-      //      * 清除cookies 并且跳转到首页
-      //      */
-      //   store.dispatch('user/resetCookies')
-      //     .then(() => {
-      //       location.reload()
-      //     })
-      // }
-      // alert(JSON.stringify(res.isAdmin))
       return res
     }
   },

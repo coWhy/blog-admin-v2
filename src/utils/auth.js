@@ -11,9 +11,3 @@ export function getAccessToken() {
 export function getRefreshToken() {
   return Cookies.get(RefreshTokenKey)
 }
-/*
- * 获取是否是管理员
- */
-export function getIsAdmin() {
-  return Cookies.get('isAdmin')
-}

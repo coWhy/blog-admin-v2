@@ -1,9 +1,7 @@
 import router from './router'
-import store from './store'
-import { MessageBox } from 'element-ui'
 import NProgress from 'nprogress' // progress bar
 import 'nprogress/nprogress.css' // progress bar style
-import { getAccessToken, getIsAdmin } from '@/utils/auth' // get token from cookie
+import { getAccessToken } from '@/utils/auth' // get token from cookie
 import getPageTitle from '@/utils/get-page-title'
 
 NProgress.configure({ showSpinner: false }) // NProgress Configuration
@@ -26,27 +24,6 @@ router.beforeEach(async(to, from, next) => {
       NProgress.done()
     } else {
       next()
-    }
-    //  不是管理员 引导到登录页
-    if (getIsAdmin() !== '1') {
-      MessageBox.confirm(
-        '您不是管理员不能访问该资源',
-        '确认',
-        {
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
-          type: 'warning'
-        }
-      ).then(() => {
-        /**
-         * 清除cookies 并且跳转到首页
-         */
-        // alert(getIsAdmin())
-        store.dispatch('user/resetCookies')
-          .then(() => {
-            location.reload()
-          })
-      })
     }
   } else {
     /* has no token*/
