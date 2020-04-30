@@ -15,15 +15,8 @@
       </div>
       <div class="progress-item">
         <div class="info_item">
-          <span>个性签名</span>
-          <span>{{ adminInfo.signature }}</span>
-        </div>
-        <el-progress :percentage="100" status="success" />
-      </div>
-      <div class="progress-item">
-        <div class="info_item">
-          <span>手机号码</span>
-          <span>{{ adminInfo.phone }}</span>
+          <span>邮箱地址</span>
+          <span>{{ adminInfo.email }}</span>
         </div>
         <el-progress :percentage="100" status="success" />
       </div>

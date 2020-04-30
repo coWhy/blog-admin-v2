@@ -11,13 +11,18 @@
           <i class="el-icon-caret-bottom" />
         </div>
         <el-dropdown-menu slot="dropdown" class="user-dropdown">
-          <router-link to="/">
+          <router-link to="/profile" @click.native="flushPage">
             <el-dropdown-item>
-              个人信息
+              <span style="display:block;">个人信息</span>
             </el-dropdown-item>
           </router-link>
-          <el-dropdown-item divided @click.native="logout">
-            <span style="display:block;">注销</span>
+          <router-link to="/" @click.native="flushPage">
+            <el-dropdown-item>
+              <span style="display:block;">修改密码</span>
+            </el-dropdown-item>
+          </router-link>
+          <el-dropdown-item @click.native="logout">
+            <span style="display:block;">注销登录</span>
           </el-dropdown-item>
         </el-dropdown-menu>
       </el-dropdown>
@@ -48,6 +53,10 @@ export default {
     async logout() {
       await this.$store.dispatch('user/logout')
       this.$router.push(`/login?redirect=${this.$route.fullPath}`)
+    },
+    // 跳转页面  刷新
+    flushPage() {
+      this.$router.go(0)
     }
   }
 }

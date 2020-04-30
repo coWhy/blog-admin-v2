@@ -50,7 +50,7 @@ export default {
           model: {
             jsonPath: `../live2dw/live2d-widget-model-${this.modelName}/assets/${this.modelName}.model.json`
           },
-          display: { position: 'right', width: 240, height: 360 },
+          display: { position: 'right', width: 240, height: 380 },
           mobile: { show: true },
           log: false
         })
@@ -79,7 +79,6 @@ export default {
       }
     }
   }
-
 }
 </script>
 <style lang="scss" scoped>
