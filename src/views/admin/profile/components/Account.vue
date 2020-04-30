@@ -1,5 +1,6 @@
 <template>
   <el-form>
+
     <el-form-item label="真实姓名">
       <el-input v-model.trim="admin.realName" />
     </el-form-item>
@@ -32,11 +33,12 @@
     <el-form-item>
       <el-button type="primary" @click="submit">更新</el-button>
     </el-form-item>
-  </el-form>
+    </el-form-ite></el-form>
 </template>
 
 <script>
 export default {
+  components: { },
   props: {
     admin: {
       type: Object,
@@ -52,6 +54,11 @@ export default {
           signature: ''
         }
       }
+    }
+  },
+  data() {
+    return {
+      uploadUrl: process.env.VUE_APP_UPLOAD_URL // 上传图片路径
     }
   },
   methods: {
