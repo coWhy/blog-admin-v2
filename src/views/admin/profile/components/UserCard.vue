@@ -14,16 +14,6 @@
         <div class="box-center">
           <el-button type="primary" icon="el-icon-upload" size="mini" @click="imagecropperShow=true">更换头像</el-button>
         </div>
-        <image-cropper
-          v-show="imagecropperShow"
-          :key="imagecropperKey"
-          :width="300"
-          :height="300"
-          url="https://httpbin.org/post"
-          lang-type="zh"
-          @close="close"
-          @crop-upload-success="cropSuccess"
-        />
         <div class="box-center">
           <div class="user-name text-center">{{ admin.nickName }}</div>
           <div class="user-role text-center text-muted">管理员</div>
@@ -66,6 +56,19 @@
         </div>
       </div>
     </el-card>
+    <image-cropper
+      v-show="imagecropperShow"
+      :key="imagecropperKey"
+      :width="100"
+      :height="100"
+      :url="uploadUrl"
+      field="file"
+      lang-type="zh"
+      :no-square="true"
+      :no-circle="true"
+      @close="close"
+      @crop-upload-success="cropUploadSuccess"
+    />
   </div>
 </template>
 
@@ -94,15 +97,16 @@ export default {
   },
   data() {
     return {
+      uploadUrl: process.env.VUE_APP_UPLOAD_URL,
       imagecropperShow: false,
-      imagecropperKey: 0,
-      image: 'https://wpimg.wallstcn.com/577965b9-bb9e-4e02-9f0c-095b41417191'
+      imagecropperKey: 0
     }
   }, methods: {
-    cropSuccess(resData) {
+    cropUploadSuccess(res, field) {
       this.imagecropperShow = false
       this.imagecropperKey = this.imagecropperKey + 1
-      this.image = resData.files.avatar
+      this.$message.success('更换成功')
+      console.log(`图片地址：${res}`)
     },
     close() {
       this.imagecropperShow = false

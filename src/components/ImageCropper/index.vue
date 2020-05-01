@@ -888,9 +888,9 @@ export default {
   left: 0;
   right: 0;
   margin: auto;
-  width: 600px;
-  height: 330px;
-  padding: 25px;
+  width: 325px;
+  height: 325px;
+  padding: 40px;
   background-color: #fff;
   border-radius: 2px;
   -webkit-animation: vicp 0.12s ease-in;
@@ -945,7 +945,7 @@ export default {
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
   padding: 35px;
-  height: 170px;
+  height: 215px;
   background-color: rgba(0, 0, 0, 0.03);
   text-align: center;
   border: 1px dashed rgba(0, 0, 0, 0.08);
@@ -1664,9 +1664,10 @@ export default {
   line-height: 100px;
 }
 .vue-image-crop-upload .vicp-wrap .vicp-operate {
-  position: absolute;
-  right: 20px;
-  bottom: 20px;
+  display: flex;
+  justify-content: space-around;
+  margin-top: 10;
+  // bottom: 20px;
 }
 .vue-image-crop-upload .vicp-wrap .vicp-operate a {
   position: relative;
