@@ -889,7 +889,7 @@ export default {
   right: 0;
   margin: auto;
   width: 325px;
-  height: 325px;
+  height: 345px;
   padding: 40px;
   background-color: #fff;
   border-radius: 2px;
@@ -1666,7 +1666,7 @@ export default {
 .vue-image-crop-upload .vicp-wrap .vicp-operate {
   display: flex;
   justify-content: space-around;
-  margin-top: 10;
+  margin-top: 20px;
   // bottom: 20px;
 }
 .vue-image-crop-upload .vicp-wrap .vicp-operate a {
