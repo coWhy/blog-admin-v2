@@ -22,6 +22,7 @@
           name="username"
           type="text"
           tabindex="1"
+          clearable
           auto-complete="on"
         />
       </el-form-item>

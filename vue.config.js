@@ -27,10 +27,9 @@ module.exports = {
       errors: true
     },
     proxy: {
-      '/api': {
-        target: 'http://127.0.0.1:8080/api', // 代理接口地址
-        secure: false, // 如果是https接口，需要配置这个参数
-        changeOrigin: true, // 是否跨域
+      [process.env.VUE_APP_BASE_API]: {
+        target: `http://127.0.0.1:8080/api`,
+        changeOrigin: true,
         pathRewrite: {
           ['^' + process.env.VUE_APP_BASE_API]: ''
         }

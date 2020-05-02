@@ -63,9 +63,9 @@
       :height="100"
       :url="uploadUrl"
       field="file"
-      lang-type="zh"
       :no-square="true"
       :no-circle="true"
+      lang-type="zh"
       @close="close"
       @crop-upload-success="cropUploadSuccess"
     />
