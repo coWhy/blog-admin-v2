@@ -1,4 +1,4 @@
-import { login, logout, getAdminInfo } from '@/api/user'
+import userApi from '@/api/user'
 import { resetRouter } from '@/router'
 import { Message } from 'element-ui'
 import Cookies from 'js-cookie'
@@ -60,7 +60,7 @@ const actions = {
   login({ commit }, loginForm) {
     const { username, password } = loginForm
     return new Promise((resolve, reject) => {
-      login({ username: username.trim(), password: password }).then(res => {
+      userApi.login({ username: username.trim(), password: password }).then(res => {
         const { accessToken, refreshToken, isAdmin } = res.data
         // 判断是否是管理员
         if (isAdmin === 1) {
@@ -80,7 +80,7 @@ const actions = {
   // 获取管理员信息
   getAdminInfo({ commit }) {
     return new Promise((resolve, reject) => {
-      getAdminInfo().then(res => {
+      userApi.getAdminInfo().then(res => {
         commit('SET_ADMIN_INFO', res.data)
         // console.log(JSON.stringify(res.data))
         resolve()
@@ -92,7 +92,7 @@ const actions = {
   // 用户注销登录
   logout({ commit, state }) {
     return new Promise((resolve, reject) => {
-      logout().then(() => {
+      userApi.logout().then(() => {
         commit('REMOVE_COKKIES')
         resetRouter()
         commit('RESET_STATE')

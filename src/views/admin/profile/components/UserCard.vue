@@ -6,7 +6,7 @@
       </div>
       <div class="user-profile">
         <div class="box-center">
-          <pan-thumb :image="admin.avatar" :height="'120px'" :width="'120px'" :hoverable="false">
+          <pan-thumb :image="adminInfo.avatar" :height="'120px'" :width="'120px'" :hoverable="false">
             <div>管理员</div>
           </pan-thumb>
         </div>
@@ -15,7 +15,7 @@
           <el-button type="primary" icon="el-icon-upload" size="mini" @click="imagecropperShow=true">更换头像</el-button>
         </div>
         <div class="box-center">
-          <div class="user-name text-center">{{ admin.nickName }}</div>
+          <div class="user-name text-center">{{ adminInfo.nickName }}</div>
           <div class="user-role text-center text-muted">管理员</div>
         </div>
       </div>
@@ -26,7 +26,7 @@
           <span><i class="fa  fa-info" aria-hidden="true" />&nbsp&nbsp自我介绍</span>
           <div class="user-bio-section-body">
             <div class="text-muted">
-              {{ admin.introduction }}
+              {{ adminInfo.introduction }}
             </div>
           </div>
         </div>
@@ -34,7 +34,7 @@
           <span><i class="fa  fa-pencil-square-o" aria-hidden="true" />&nbsp&nbsp个性签名</span>
           <div class="user-bio-section-body">
             <div class="text-muted">
-              {{ admin.signature }}
+              {{ adminInfo.signature }}
             </div>
           </div>
         </div>
@@ -42,7 +42,7 @@
           <span><i class="fa  fa-phone" aria-hidden="true" />&nbsp&nbsp手机号</span>
           <div class="user-bio-section-body">
             <div class="text-muted">
-              {{ admin.phone }}
+              {{ adminInfo.phone }}
             </div>
           </div>
         </div>
@@ -50,7 +50,7 @@
           <span><i class="fa  fa-envelope-o" aria-hidden="true" />&nbsp&nbsp邮箱地址</span>
           <div class="user-bio-section-body">
             <div class="text-muted">
-              {{ admin.email }}
+              {{ adminInfo.email }}
             </div>
           </div>
         </div>
@@ -75,27 +75,10 @@
 <script>
 import PanThumb from '@/components/PanThumb'
 import ImageCropper from '@/components/ImageCropper'
-import { changeAdminAvatar } from '@/api/user'
+import userApi from '@/api/user'
+import { mapGetters } from 'vuex'
 export default {
   components: { PanThumb, ImageCropper },
-  props: {
-    admin: {
-      type: Object,
-      default: () => {
-        return {
-          realName: '',
-          lastLoginAt: '',
-          sex: '',
-          phone: '',
-          email: '',
-          avatar: '',
-          nickName: '',
-          introduction: '',
-          signature: ''
-        }
-      }
-    }
-  },
   data() {
     return {
       uploadUrl: process.env.VUE_APP_UPLOAD_URL,
@@ -103,17 +86,24 @@ export default {
       imagecropperKey: 0
     }
   },
+  computed: {
+    ...mapGetters([
+      'adminInfo'
+    ])
+  },
   methods: {
-    cropUploadSuccess(res, field) {
+    // 上传头像
+    async  cropUploadSuccess(res, field) {
       this.imagecropperShow = false
       this.imagecropperKey = this.imagecropperKey + 1
       // 更新头像 传入后台
-      changeAdminAvatar(res)
-      this.$store.dispatch('user/getAdminInfo')
-      // console.log(result)
-      this.avatar = res
-      this.$message.success('更新成功')
-      console.log(`图片地址：${res}`)
+      const { code, msg } = await userApi.changeAdminAvatar(res)
+      if (code === 0) {
+        this.$store.dispatch('user/getAdminInfo')
+        this.$message.success(msg)
+      } else {
+        this.$message.error(msg)
+      }
     },
     close() {
       this.imagecropperShow = false
