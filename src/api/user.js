@@ -11,5 +11,10 @@ export function logout() {
 
 // 获取管理员信息
 export function getAdminInfo() {
-  return request.get('/user/admin/info')
+  return request.get('/admin/info')
+}
+
+// 更换管理员头像
+export function changeAdminAvatar(data) {
+  return request.post('/admin/avatar', data)
 }

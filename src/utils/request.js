@@ -13,6 +13,8 @@ const service = axios.create({
 // 请求拦截器
 service.interceptors.request.use(
   config => {
+    // 解决中文乱码问题
+    config.headers['Content-Type'] = 'application/json;charset=UTF-8'
     /**
      * 存了两个token
      */

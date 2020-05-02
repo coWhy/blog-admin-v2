@@ -75,6 +75,7 @@
 <script>
 import PanThumb from '@/components/PanThumb'
 import ImageCropper from '@/components/ImageCropper'
+import { changeAdminAvatar } from '@/api/user'
 export default {
   components: { PanThumb, ImageCropper },
   props: {
@@ -101,11 +102,17 @@ export default {
       imagecropperShow: false,
       imagecropperKey: 0
     }
-  }, methods: {
+  },
+  methods: {
     cropUploadSuccess(res, field) {
       this.imagecropperShow = false
       this.imagecropperKey = this.imagecropperKey + 1
-      this.$message.success('更换成功')
+      // 更新头像 传入后台
+      changeAdminAvatar(res)
+      this.$store.dispatch('user/getAdminInfo')
+      // console.log(result)
+      this.avatar = res
+      this.$message.success('更新成功')
       console.log(`图片地址：${res}`)
     },
     close() {
