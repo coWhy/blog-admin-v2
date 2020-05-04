@@ -1,5 +1,5 @@
 <template>
-  <el-form ref="form" :model="admin" :rules="rules">
+  <el-form ref="adminForm" :model="admin" :rules="rules">
     <el-form-item label="真实姓名" prop="realName">
       <el-input v-model.trim="admin.realName" />
     </el-form-item>
@@ -107,16 +107,25 @@ export default {
     beanUtils.copyProperties(this.adminInfo, this.admin)
   },
   methods: {
-    async submit() {
-      const { code, msg } = await userApi.updateAdminInfo(this.admin)
-      if (code === 0) {
-        this.$store.dispatch('user/getAdminInfo')
-        // 刷新页面
-        this.$router.go(0)
-        this.$message.success(msg)
-      } else {
-        this.$message.error(msg)
-      }
+    submit() {
+      this.$refs.adminForm.validate((valid) => {
+        if (valid) {
+          userApi.updateAdminInfo(this.admin).then(res => {
+            if (res.code === 0) {
+              this.$store.dispatch('user/getAdminInfo')
+              this.$message.success(res.msg)
+              // 刷新页面
+              setTimeout(() => {
+                this.$router.go(0)
+              }, 1000)
+            } else {
+              this.$message.error(res.msg)
+            }
+          })
+        } else {
+          return false
+        }
+      })
     }
   }
 
