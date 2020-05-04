@@ -93,7 +93,7 @@ export default {
   },
   methods: {
     // 上传头像
-    async  cropUploadSuccess(res, field) {
+    async cropUploadSuccess(res, field) {
       this.imagecropperShow = false
       this.imagecropperKey = this.imagecropperKey + 1
       // 更新头像 传入后台

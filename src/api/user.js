@@ -15,6 +15,10 @@ export default {
   // 更换管理员头像
   changeAdminAvatar(data) {
     return request.post('/admin/avatar', data)
+  },
+  // 修改管理员个人信息(不包含头像)
+  updateAdminInfo(data) {
+    return request.post('/admin/info', data)
   }
 }
 
