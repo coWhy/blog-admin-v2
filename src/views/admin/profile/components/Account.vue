@@ -21,12 +21,11 @@
     </el-form-item>
     <el-form-item label="个性签名" prop="signature">
       <el-input v-model.trim="admin.signature" type="textarea" :rows="6" />
-
     </el-form-item>
     <el-form-item>
       <el-button type="primary" @click="submit">更新</el-button>
     </el-form-item>
-    </el-form-itemlabel="手机号"></el-form>
+  </el-form>
 </template>
 
 <script>
